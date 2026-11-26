@@ -30,6 +30,6 @@ Add older entries below only when they help explain a decision or transition.
 
 - **Tool:** Codex
 - **Changes:** Reviewed the WhatsApp screenshot in Downloads. The landing hero occupied most of the phone screen above a live question. The hero now hides during quiz and results views, then returns to the landing/dashboard. Removed the question-level star caption and placed just a yellow star beside each document-derived question; the explanation remains on the landing page.
-- **Checks run:** `node --check app.js` and `git diff --check` passed. No interactive browser or phone test was run. Published-page check is pending push.
+- **Checks run:** `node --check app.js` and `git diff --check` passed. GitHub Pages reports `built`; published `app.js` and `styles.css` both returned HTTP 200 and contain the new quiz layout and star-only marker. No interactive browser or phone test was run.
 - **Unresolved:** Learner should confirm the phone layout and star placement after refreshing the published app.
 - **Next step:** Publish and ask learner to refresh the site on the phone.
