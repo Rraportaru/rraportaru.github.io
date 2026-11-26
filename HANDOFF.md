@@ -16,3 +16,12 @@ Update this file whenever meaningful work is completed so another AI can continu
 ## Handoff history
 
 Add older entries below only when they help explain a decision or transition.
+
+## Update — 2026-11-26
+
+- **Tool:** Codex
+- **Changes:** Added 80 starred, paraphrased questions representing both 40-question sample papers on quiz document PDF pages 102–151. Added Sample Paper 1, Sample Paper 2, and all-80 practice choices; question and choice order shuffle. Added the yellow-star explanation on the welcome screen and beside source questions, including review. Explanations cite learner-workbook topics. Updated the service-worker cache and project documentation.
+- **Decisions:** Keep the original 20 × 10 quizzes. Each new document mode is one attempt and is graded proportionally out of 10; 8/10 remains the pass threshold. The source PDFs remain private and are not in the public app repository.
+- **Checks run:** No app tests or interactive browser checks were run, as requested in the project workflow. The two source sample-paper sections were read from the supplied PDF extraction.
+- **Unresolved:** iPhone Safari interaction still needs learner testing. Confirm the deployed site finishes rebuilding after the push.
+- **Next step:** Open `https://rraportaru.github.io/` on the phone and try each document mode.

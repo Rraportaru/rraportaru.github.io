@@ -1,9 +1,10 @@
-const CACHE_NAME = 'ai-governance-practice-v1';
+const CACHE_NAME = 'ai-governance-practice-v2';
 const APP_FILES = [
   './',
   './index.html',
   './styles.css',
   './questions.js',
+  './document-questions.js',
   './app.js',
   './manifest.webmanifest',
   './app-icon.svg',

@@ -4,6 +4,7 @@
   const HISTORY_KEY = 'ai-governance-practice.attempts.v1';
   const PASS_GRADE = 8;
   const versions = window.quizVersions || [];
+  const documentSets = window.documentQuestionSets || [];
   let nickname = readStorage(NAME_KEY, '');
   let attempts = readStorage(HISTORY_KEY, []);
   if (!Array.isArray(attempts)) attempts = [];
@@ -57,7 +58,8 @@
         <div class="welcome-copy">
           <p class="eyebrow">YOUR PRACTICE SPACE</p>
           <h2>What should we call you?</h2>
-          <p class="body-copy">Choose a nickname to start. Your nickname and grades are saved only in this browser on this device.</p>
+        <p class="body-copy">Choose a nickname to start. Your nickname and grades are saved only in this browser on this device.</p>
+        <p class="star-note"><span aria-hidden="true">★</span> A yellow star marks each question adapted from the quiz document’s Sample Papers 1 and 2 (PDF pages 102–151).</p>
         </div>
         <form id="nickname-form" class="nickname-form">
           <label for="nickname">Nickname</label>
@@ -89,13 +91,14 @@
     const average = averageGrade();
     const passed = attempts.filter((item) => item.passed).length;
     const recent = attempts.slice(-6).reverse();
-    const versionOptions = versions.map((item, index) => `<option value="${index + 1}">${escapeHtml(item.title)}</option>`).join('');
+    const versionOptions = versions.map((item, index) => `<option value="version-${index}">${escapeHtml(item.title)}</option>`).join('');
+    const documentOptions = documentSets.map((item) => `<option value="${item.id}">${escapeHtml(item.title)}</option>`).join('');
     app.innerHTML = `
       <div class="dashboard-head">
         <div>
           <p class="eyebrow">WELCOME BACK</p>
           <h2 class="dashboard-title">${escapeHtml(nickname)}</h2>
-          <p class="body-copy">Each random test has 10 questions. Your grade is out of 10; <strong>8/10 or higher passes.</strong></p>
+          <p class="body-copy">Random and numbered tests have 10 questions. Document practice has 40 or 80. Every grade is out of 10; <strong>8/10 or higher passes.</strong></p>
         </div>
         <span class="pass-pill">PASS ≥ 8</span>
       </div>
@@ -105,11 +108,11 @@
         <article class="stat-card"><span>Passed</span><strong>${passed}</strong><em>Grade of 8/10 or higher</em></article>
       </div>
       <div class="start-panel">
-        <div class="start-copy"><h3>Ready for a practice test?</h3><p>Questions and answer choices are shuffled each time.</p></div>
+        <div class="start-copy"><h3>Ready for a practice test?</h3><p>Questions and answer choices are shuffled each time. <span class="star-inline">★</span> marks questions adapted from the quiz document.</p></div>
         <div class="start-controls">
           <label class="sr-only" for="version-select">Choose a version or randomize</label>
           <select id="version-select" aria-label="Choose a version">
-            <option value="random">Random version</option>${versionOptions}
+            <option value="random">Random version · 10 questions</option>${versionOptions}${documentOptions}
           </select>
           <button class="primary-button" id="start-button" type="button">Start test</button>
         </div>
@@ -130,7 +133,7 @@
 
     app.querySelector('#start-button').addEventListener('click', () => {
       const choice = app.querySelector('#version-select').value;
-      startTest(choice === 'random' ? null : Number(choice) - 1);
+      startTest(choice);
     });
     app.querySelector('#edit-nickname-form').addEventListener('submit', (event) => {
       event.preventDefault();
@@ -151,15 +154,29 @@
     </li>`;
   }
 
-  function startTest(versionIndex) {
-    let chosenIndex = versionIndex;
-    if (chosenIndex === null) {
+  function startTest(choice) {
+    if (choice.startsWith('version-')) {
+      const chosenIndex = Number(choice.slice('version-'.length));
+      startQuestionSet(versions[chosenIndex].title, versions[chosenIndex].questions, chosenIndex);
+      return;
+    }
+    const documentSet = documentSets.find((item) => item.id === choice);
+    if (documentSet) {
+      startQuestionSet(documentSet.title.replace(/^⭐\s*/, ''), documentSet.questions, choice);
+      return;
+    }
+    let chosenIndex = null;
+    if (choice === 'random') {
       const previous = attempts[attempts.length - 1]?.versionIndex;
       const choices = versions.map((_, index) => index).filter((index) => versions.length < 2 || index !== previous);
       chosenIndex = choices[Math.floor(Math.random() * choices.length)];
     }
     const sourceVersion = versions[chosenIndex];
-    const shuffledQuestions = shuffle(sourceVersion.questions).map((item) => {
+    startQuestionSet(sourceVersion.title, sourceVersion.questions, chosenIndex);
+  }
+
+  function startQuestionSet(title, questionList, versionIndex) {
+    const shuffledQuestions = shuffle(questionList).map((item) => {
       const shuffledOptions = shuffle(item.options.map((text, index) => ({ text, correct: index === item.answer })));
       return {
         ...item,
@@ -167,7 +184,7 @@
         answer: shuffledOptions.findIndex((option) => option.correct)
       };
     });
-    current = { version: sourceVersion.title, versionIndex: chosenIndex, questions: shuffledQuestions, responses: [] };
+    current = { version: title, versionIndex, questions: shuffledQuestions, responses: [] };
     questionIndex = 0;
     selected = null;
     locked = false;
@@ -184,6 +201,7 @@
         <span class="question-number">${escapeHtml(current.version)}</span>
         <span class="progress-count">Question ${questionIndex + 1} of ${current.questions.length}</span>
       </div>
+      ${item.isDocument ? `<p class="document-badge" aria-label="Question adapted from the quiz document"><span aria-hidden="true">★</span> From quiz document · ${escapeHtml(item.documentLabel)}</p>` : ''}
       <div class="progress-track" role="progressbar" aria-label="Test progress" aria-valuemin="0" aria-valuemax="${current.questions.length}" aria-valuenow="${completeBefore}">
         <div class="progress-fill" style="width:${percent}%"></div>
       </div>
@@ -222,7 +240,7 @@
       <div class="feedback-title"><span aria-hidden="true">${correct ? '✓' : '↗'}</span>${correct ? 'Correct' : 'Not quite — the correct answer is ' + String.fromCharCode(65 + item.answer)}</div>
       ${correct ? '' : `<p><strong>${escapeHtml(item.options[item.answer])}</strong></p>`}
       <p>${escapeHtml(item.explanation)}</p>
-      <span class="source-label">Workbook reference · ${escapeHtml(item.source)}</span>
+      <span class="source-label">Explanation based on ${escapeHtml(item.source)}${item.documentLabel ? ` · ${escapeHtml(item.documentLabel)}` : ''}</span>
     </section>`;
   }
 
@@ -273,7 +291,7 @@
       ${current.questions.map((item, index) => {
         const correct = current.responses[index] === item.answer;
         return `<article class="review-item">
-          <p class="review-q">${index + 1}. ${escapeHtml(item.question)}</p>
+          <p class="review-q">${item.isDocument ? '<span class="review-star" aria-label="From quiz document">★</span>' : ''}${index + 1}. ${escapeHtml(item.question)}</p>
           <p class="review-meta"><strong>Your answer:</strong> ${escapeHtml(item.options[current.responses[index]])}${correct ? ' · Correct' : ' · Correct answer: ' + escapeHtml(item.options[item.answer])}<br>${escapeHtml(item.explanation)}<br><strong>Source:</strong> ${escapeHtml(item.source)}</p>
         </article>`;
       }).join('')}

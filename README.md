@@ -1,6 +1,6 @@
 # AI Governance Practice
 
-A phone-friendly static web app for practicing ITIL AI Governance. It contains **20 versions with 10 questions each (200 original questions)**. Each test is marked out of 10; a grade of **8/10 or higher passes**.
+A phone-friendly static web app for practicing ITIL AI Governance. It contains **20 versions with 10 original questions each (200 total)** and **80 starred, paraphrased questions from Sample Papers 1 and 2 in quiz document PDF pages 102–151**. Each attempt is marked out of 10; a grade of **8/10 or higher passes**.
 
 ## Start locally
 
@@ -9,10 +9,12 @@ Open `index.html` in a browser. No packages or server are required for a basic l
 ## Use the quiz
 
 1. Enter a nickname. Do not enter a password, email, or other private details.
-2. Choose a random test or select a version.
+2. Choose a random test, one of the 20 versions, a 40-question sample paper, or all 80 document questions.
 3. Questions and answer choices are shuffled each time.
 4. After each response, see the correct answer and its workbook-based explanation.
-5. At the end, see pass/fail, the test grade, and the global arithmetic average across completed attempts.
+5. At the end, see pass/fail, the test grade, and the global arithmetic average across completed attempts. Longer document tests are scaled to a grade out of 10.
+
+Questions with a yellow star are adapted from the quiz document. Explanations are based on the learner workbook and show workbook topics; the source PDFs are not published with the app.
 
 The global average includes every completed attempt, including retries. The pass threshold is 8/10.
 
@@ -33,6 +35,7 @@ The PDFs remain in their original Desktop folder and are not part of the web app
 ## Files
 
 - `questions.js` — 20 test versions and their explanations
+- `document-questions.js` — 80 starred practice questions adapted from the two sample papers
 - `app.js` — nickname, randomization, grading, history, and quiz behavior
 - `styles.css` — responsive layout and touch-friendly controls
 - `manifest.webmanifest`, `app-icon.svg`, PNG icons, `sw.js` — install and offline support
