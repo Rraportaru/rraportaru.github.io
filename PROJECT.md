@@ -3,14 +3,14 @@
 - **Name:** AI Governance Practice
 - **Description:** A phone-friendly browser app with 20 randomized 10-question tests, instant workbook-grounded feedback, nickname-based progress, and an overall average grade.
 - **Purpose:** Help the learner check understanding and learn from each answer using only the supplied learner workbook.
-- **Status:** 20 test versions (200 questions) are implemented; responsive and installable for Safari/GitHub Pages. Publishing to `https://rraportaru.github.io/` is in progress.
+- **Status:** 20 test versions (200 questions) are published at `https://rraportaru.github.io/`; phone testing is pending.
 - **Main location:** `~/Desktop/Projects/AI-Governance-Practice/`
 - **Created:** 2026-11-26
 - **Last updated:** 2026-11-26
 
 ## Current state
 
-The source folder contains `ITIL_AI-Governance_Learner_Workbook_EN_v5.0.pdf` and `quiz document.pdf`. The browser app contains 20 versions of 10 original questions each, randomized question and option order, immediate explanations with module references, nickname storage, per-attempt pass/fail, and an arithmetic average of completed grades. It is prepared for GitHub Pages and iPhone Safari at the user-site root.
+The source folder contains `ITIL_AI-Governance_Learner_Workbook_EN_v5.0.pdf` and `quiz document.pdf`. The browser app contains 20 versions of 10 original questions each, randomized question and option order, immediate explanations with module references, nickname storage, per-attempt pass/fail, and an arithmetic average of completed grades. It is published at the GitHub Pages user-site root; the PDFs are not in the public repository.
 
 ## Important decisions
 
@@ -22,10 +22,9 @@ The source folder contains `ITIL_AI-Governance_Learner_Workbook_EN_v5.0.pdf` and
 
 ## Next steps
 
-1. Have the learner try the 20 versions on desktop and iPhone Safari and report any corrections.
-2. Publish after the user supplies or confirms the GitHub repository for `rraportaru`.
+1. Have the learner open the published site on iPhone Safari, try the quiz, and report any corrections.
+2. Add cross-device progress sync only if requested later.
 
 ## Open questions
 
-- No GitHub repository URL or remote is configured, so publishing is not complete.
 - Nickname and grades remain local to the browser and do not sync between devices.

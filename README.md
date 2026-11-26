@@ -22,14 +22,11 @@ The layout supports narrow touch screens, large tap targets, safe-area insets, a
 
 The nickname and results are saved in browser storage on that device. They do not sync between devices and are not sent to GitHub. Clearing Safari website data clears the saved progress.
 
-## Publish with GitHub Pages
+## Published site
 
-The app uses relative file paths and is being prepared for the user Pages address `https://rraportaru.github.io/`.
+Open the app at **https://rraportaru.github.io/**. It is published from the root of the public `Rraportaru/rraportaru.github.io` repository on the `main` branch.
 
-1. Use the user-site repository `Rraportaru.github.io` under `rraportaru`.
-2. Publish the app files from the repository root on the `main` branch.
-3. Configure GitHub Pages to deploy from branch `main`, folder `/ (root)`.
-4. Open `https://rraportaru.github.io/` in iPhone Safari. Use **Share → Add to Home Screen** to add it as a web app.
+On iPhone, open the link in Safari and use **Share → Add to Home Screen** to add it as a web app.
 
 The PDFs remain in their original Desktop folder and are not part of the web app. Nickname and grade history stay on each device.
 
