@@ -22,6 +22,6 @@ Add older entries below only when they help explain a decision or transition.
 - **Tool:** Codex
 - **Changes:** Added 80 starred, paraphrased questions representing both 40-question sample papers on quiz document PDF pages 102–151. Added Sample Paper 1, Sample Paper 2, and all-80 practice choices; question and choice order shuffle. Added the yellow-star explanation on the welcome screen and beside source questions, including review. Explanations cite learner-workbook topics. Updated the service-worker cache and project documentation.
 - **Decisions:** Keep the original 20 × 10 quizzes. Each new document mode is one attempt and is graded proportionally out of 10; 8/10 remains the pass threshold. The source PDFs remain private and are not in the public app repository.
-- **Checks run:** No app tests or interactive browser checks were run, as requested in the project workflow. The two source sample-paper sections were read from the supplied PDF extraction.
-- **Unresolved:** iPhone Safari interaction still needs learner testing. Confirm the deployed site finishes rebuilding after the push.
+- **Checks run:** `node --check app.js` and `node --check document-questions.js` passed; `git diff --check` passed; the data file contains 80 question records. GitHub Pages reports `built`; the published app page and `document-questions.js` both returned HTTP 200. No app tests or interactive browser checks were run.
+- **Unresolved:** iPhone Safari interaction still needs learner testing.
 - **Next step:** Open `https://rraportaru.github.io/` on the phone and try each document mode.
