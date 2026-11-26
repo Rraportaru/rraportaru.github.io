@@ -14,7 +14,7 @@ Open `index.html` in a browser. No packages or server are required for a basic l
 4. After each response, see the correct answer and its workbook-based explanation.
 5. At the end, see pass/fail, the test grade, and the global arithmetic average across completed attempts. Longer document tests are scaled to a grade out of 10.
 
-Questions with a yellow star are adapted from the quiz document. Explanations are based on the learner workbook and show workbook topics; the source PDFs are not published with the app.
+Questions with a yellow star are adapted from the quiz document. The landing page explains the star; during a quiz it appears by itself beside the question. Explanations are based on the learner workbook and show workbook topics; the source PDFs are not published with the app.
 
 The global average includes every completed attempt, including retries. The pass threshold is 8/10.
 

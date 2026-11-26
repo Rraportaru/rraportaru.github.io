@@ -25,3 +25,11 @@ Add older entries below only when they help explain a decision or transition.
 - **Checks run:** `node --check app.js` and `node --check document-questions.js` passed; `git diff --check` passed; the data file contains 80 question records. GitHub Pages reports `built`; the published app page and `document-questions.js` both returned HTTP 200. No app tests or interactive browser checks were run.
 - **Unresolved:** iPhone Safari interaction still needs learner testing.
 - **Next step:** Open `https://rraportaru.github.io/` on the phone and try each document mode.
+
+## Update — 2026-11-26
+
+- **Tool:** Codex
+- **Changes:** Reviewed the WhatsApp screenshot in Downloads. The landing hero occupied most of the phone screen above a live question. The hero now hides during quiz and results views, then returns to the landing/dashboard. Removed the question-level star caption and placed just a yellow star beside each document-derived question; the explanation remains on the landing page.
+- **Checks run:** `node --check app.js` and `git diff --check` passed. No interactive browser or phone test was run. Published-page check is pending push.
+- **Unresolved:** Learner should confirm the phone layout and star placement after refreshing the published app.
+- **Next step:** Publish and ask learner to refresh the site on the phone.

@@ -19,7 +19,8 @@ The source folder contains `ITIL_AI-Governance_Learner_Workbook_EN_v5.0.pdf` and
 - Mark each test out of 10 and pass at 8/10 or higher.
 - Store the nickname and attempt history in local browser storage; do not send learner data to a server.
 - Show feedback immediately after each answer, including the correct answer and an explanation for both correct and incorrect responses.
-- Mark questions adapted from the sample papers with a yellow star and explain the marker on the welcome screen.
+- Mark questions adapted from the sample papers with a yellow star beside the question; explain the marker only on the landing page.
+- Hide the large landing-page introduction during a quiz to keep the phone question screen focused.
 - Keep the test data separate from app behavior so future versions can be added on request.
 
 ## Next steps

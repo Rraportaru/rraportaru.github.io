@@ -53,6 +53,7 @@
   }
 
   function renderWelcome() {
+    document.body.classList.remove('quiz-active');
     app.innerHTML = `
       <div class="welcome-layout">
         <div class="welcome-copy">
@@ -88,6 +89,7 @@
   }
 
   function renderDashboard() {
+    document.body.classList.remove('quiz-active');
     const average = averageGrade();
     const passed = attempts.filter((item) => item.passed).length;
     const recent = attempts.slice(-6).reverse();
@@ -189,6 +191,7 @@
     selected = null;
     locked = false;
     reviewVisible = false;
+    document.body.classList.add('quiz-active');
     renderQuestion();
   }
 
@@ -201,11 +204,10 @@
         <span class="question-number">${escapeHtml(current.version)}</span>
         <span class="progress-count">Question ${questionIndex + 1} of ${current.questions.length}</span>
       </div>
-      ${item.isDocument ? `<p class="document-badge" aria-label="Question adapted from the quiz document"><span aria-hidden="true">★</span> From quiz document · ${escapeHtml(item.documentLabel)}</p>` : ''}
       <div class="progress-track" role="progressbar" aria-label="Test progress" aria-valuemin="0" aria-valuemax="${current.questions.length}" aria-valuenow="${completeBefore}">
         <div class="progress-fill" style="width:${percent}%"></div>
       </div>
-      <h2 class="question" id="question-title" tabindex="-1">${escapeHtml(item.question)}</h2>
+      <h2 class="question" id="question-title" tabindex="-1">${item.isDocument ? '<span class="document-star" role="img" aria-label="Starred document question">★</span>' : ''}${escapeHtml(item.question)}</h2>
       <fieldset class="answers" aria-labelledby="question-title">
         <legend class="sr-only">Choose one answer</legend>
         ${item.options.map((option, i) => {
