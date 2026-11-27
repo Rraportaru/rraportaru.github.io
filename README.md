@@ -11,7 +11,7 @@ Open `index.html` in a browser. No packages or server are required for a basic l
 1. Enter a nickname. Do not enter a password, email, or other private details.
 2. Start the random mixed test. The filter has no numbered versions.
 3. The app automatically selects five regular and five starred questions, then shuffles question and answer order.
-4. After each response, see the correct answer and the four rationales from the sample-paper answer section.
+4. A correct answer shows only “Correct.” If an answer is wrong, the app identifies your choice, gives the correct answer, and explains both choices when the source paper provides those rationales.
 5. At the end, see pass/fail, the test grade, and the global arithmetic average across completed attempts.
 
 Questions with a yellow star come from the quiz document. The landing page explains the star; during a quiz it appears beside the question. The source PDFs are not published with the app.

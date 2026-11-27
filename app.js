@@ -166,11 +166,16 @@
 
   function startQuestionSet(title, questionList, versionIndex) {
     const shuffledQuestions = shuffle(questionList).map((item) => {
-      const shuffledOptions = shuffle(item.options.map((text, index) => ({ text, correct: index === item.answer })));
+      const shuffledOptions = shuffle(item.options.map((text, index) => ({
+        text,
+        correct: index === item.answer,
+        explanation: item.optionExplanations?.[index] || null
+      })));
       return {
         ...item,
         options: shuffledOptions.map((option) => option.text),
-        answer: shuffledOptions.findIndex((option) => option.correct)
+        answer: shuffledOptions.findIndex((option) => option.correct),
+        optionExplanations: shuffledOptions.map((option) => option.explanation)
       };
     });
     current = { version: title, versionIndex, questions: shuffledQuestions, responses: [] };
@@ -225,12 +230,31 @@
 
   function feedbackMarkup(item) {
     const correct = selected === item.answer;
-    return `<section class="feedback ${correct ? 'correct' : 'incorrect'}" aria-live="assertive">
-      <div class="feedback-title"><span aria-hidden="true">${correct ? '✓' : '↗'}</span>${correct ? 'Correct' : 'Not quite — the correct answer is ' + String.fromCharCode(65 + item.answer)}</div>
-      ${correct ? '' : `<p><strong>${escapeHtml(item.options[item.answer])}</strong></p>`}
-      <p>${escapeHtml(item.explanation)}</p>
-      <span class="source-label">Explanation based on ${escapeHtml(item.source)}${item.documentLabel ? ` · ${escapeHtml(item.documentLabel)}` : ''}</span>
+    if (correct) {
+      return '<section class="feedback correct" aria-live="assertive"><div class="feedback-title">Correct</div></section>';
+    }
+
+    const selectedRationale = rationaleBody(item, selected);
+    const correctRationale = rationaleBody(item, item.answer) || item.explanation;
+    return `<section class="feedback incorrect" aria-live="assertive">
+      <div class="feedback-title">Your answer is incorrect</div>
+      <div class="feedback-block feedback-wrong-answer">
+        <h3>Your answer · ${String.fromCharCode(65 + selected)}</h3>
+        <p>${escapeHtml(item.options[selected])}</p>
+        ${selectedRationale ? `<p class="feedback-reason"><strong>Why this answer is wrong</strong><br>${escapeHtml(selectedRationale)}</p>` : ''}
+      </div>
+      <div class="feedback-block feedback-right-answer">
+        <h3>Correct answer · ${String.fromCharCode(65 + item.answer)}</h3>
+        <p class="feedback-choice">${escapeHtml(item.options[item.answer])}</p>
+        <p class="feedback-reason"><strong>Why this answer is right</strong><br>${escapeHtml(correctRationale)}</p>
+      </div>
+      <span class="source-label">${escapeHtml(item.source)}${item.documentLabel ? ` · ${escapeHtml(item.documentLabel)}` : ''}</span>
     </section>`;
+  }
+
+  function rationaleBody(item, optionIndex) {
+    const rationale = item.optionExplanations?.[optionIndex];
+    return rationale ? rationale.replace(/^[A-D]\. (?:Correct|Incorrect)\.\s*/, '') : '';
   }
 
   function onQuestionAction() {
@@ -279,9 +303,18 @@
       <h3>Review this test</h3>
       ${current.questions.map((item, index) => {
         const correct = current.responses[index] === item.answer;
+        const picked = current.responses[index];
+        const pickedRationale = correct ? '' : rationaleBody(item, picked);
+        const correctRationale = rationaleBody(item, item.answer) || item.explanation;
         return `<article class="review-item">
           <p class="review-q">${item.isDocument ? '<span class="review-star" aria-label="From quiz document">★</span>' : ''}${index + 1}. ${escapeHtml(item.question)}</p>
-          <p class="review-meta"><strong>Your answer:</strong> ${escapeHtml(item.options[current.responses[index]])}${correct ? ' · Correct' : ' · Correct answer: ' + escapeHtml(item.options[item.answer])}<br>${escapeHtml(item.explanation)}<br><strong>Source:</strong> ${escapeHtml(item.source)}</p>
+          ${correct ? '<p class="review-correct">Correct</p>' : `<div class="review-explanation">
+            <p><strong>Your answer · ${String.fromCharCode(65 + picked)}:</strong> ${escapeHtml(item.options[picked])}</p>
+            ${pickedRationale ? `<p><strong>Why this answer is wrong</strong><br>${escapeHtml(pickedRationale)}</p>` : ''}
+            <p><strong>Correct answer · ${String.fromCharCode(65 + item.answer)}:</strong> ${escapeHtml(item.options[item.answer])}</p>
+            <p><strong>Why this answer is right</strong><br>${escapeHtml(correctRationale)}</p>
+          </div>`}
+          ${correct ? '' : `<p class="review-meta"><strong>Source:</strong> ${escapeHtml(item.source)}</p>`}
         </article>`;
       }).join('')}
     </section>` : '';

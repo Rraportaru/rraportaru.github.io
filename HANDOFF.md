@@ -6,6 +6,17 @@ Update this file whenever meaningful work is completed so another AI can continu
 
 - **Updated:** 2026-11-27
 - **Updated by:** Codex
+- **Summary:** Improved answer feedback. Correct answers now display only “Correct.” Wrong answers clearly show the selected answer, correct answer, and separate reasons. Sample-paper rationales stay connected to the matching choices when answer order is shuffled; regular questions show their existing explanation under the correct answer.
+- **Files or locations changed:** `app.js`, `document-questions.js`, `styles.css`, `sw.js`, `README.md`, `PROJECT.md`, `HANDOFF.md`; workspace index `../PROJECTS.md`.
+- **Checks actually run:** `node --check app.js`, `node --check document-questions.js`, data inspection (200 regular questions, 80 starred, all 80 have four option rationales), and `git diff --check` passed. No interactive browser or phone test was run.
+- **Decisions:** On a wrong answer, show only the rationale for the chosen option and the correct option; do not show all four rationales in one paragraph. On a right answer, show only “Correct.”
+- **Known issues / open questions:** This feedback update has not been published. iPhone Safari testing is pending.
+- **Next step:** Publish the update and have the learner try a wrong answer in the app.
+
+## Previous current state
+
+- **Updated:** 2026-11-27
+- **Updated by:** Codex
 - **Summary:** Replaced the 80 paraphrased starred questions with the supplied PDF's question wording, four answer choices, answer key, and all four answer rationales. Grouped them into 16 internal sets of five. The filter offers only an automatic random mixed test that selects five starred and five regular questions and shuffles question and answer order. Published at `https://rraportaru.github.io/`.
 - **Files or locations changed:** `index.html`, `app.js`, `document-questions.js`, `sw.js`, `README.md`, `PROJECT.md`, `HANDOFF.md`; workspace index `../PROJECTS.md`.
 - **Checks actually run:** `node --check app.js`, `node --check document-questions.js`, data count check (200 regular, 80 starred, 16 sets of five, four choices and rationales per starred question), and `git diff --check` passed. Live `app.js` and `document-questions.js` returned HTTP 200 and contain the new mixed-test behavior and question data. No interactive browser or phone test was run.
@@ -27,6 +38,14 @@ Update this file whenever meaningful work is completed so another AI can continu
 ## Handoff history
 
 Add older entries below only when they help explain a decision or transition.
+
+## Update — 2026-11-27
+
+- **Tool:** Codex
+- **Changes:** Changed correct feedback to display only “Correct.” Reworked wrong-answer feedback into separate “Your answer,” “Why this answer is wrong,” “Correct answer,” and “Why this answer is right” sections. Choice-specific sample-paper rationales are shuffled along with their answers. Added matching styles and bumped the service-worker cache to v5.
+- **Checks run:** `node --check app.js`, `node --check document-questions.js`, data inspection confirmed 200 regular and 80 starred questions with four choice rationales per starred question, and `git diff --check` passed. No interactive app test was run.
+- **Unresolved:** Publish this feedback change; iPhone Safari testing remains pending.
+- **Next step:** Publish, then try both an incorrect and a correct response on the site.
 
 ## Update — 2026-11-27
 
