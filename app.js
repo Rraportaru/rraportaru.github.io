@@ -60,7 +60,7 @@
           <p class="eyebrow">YOUR PRACTICE SPACE</p>
           <h2>What should we call you?</h2>
         <p class="body-copy">Choose a nickname to start. Your nickname and grades are saved only in this browser on this device.</p>
-        <p class="star-note"><span aria-hidden="true">★</span> A yellow star marks each question adapted from the quiz document’s Sample Papers 1 and 2 (PDF pages 102–151).</p>
+        <p class="star-note"><span aria-hidden="true">★</span> A yellow star marks each question from the quiz document’s Sample Papers 1 and 2 (PDF pages 102–151).</p>
         </div>
         <form id="nickname-form" class="nickname-form">
           <label for="nickname">Nickname</label>

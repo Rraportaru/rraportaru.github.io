@@ -6,12 +6,12 @@ Update this file whenever meaningful work is completed so another AI can continu
 
 - **Updated:** 2026-11-27
 - **Updated by:** Codex
-- **Summary:** Replaced the 80 paraphrased starred questions with the supplied PDF's question wording, four answer choices, answer key, and all four answer rationales. Grouped them into 16 internal sets of five. The filter now offers only an automatic random mixed test that selects five starred and five regular questions and shuffles question and answer order. Local checks passed; publication is next.
-- **Files or locations changed:** `app.js`, `document-questions.js`, `sw.js`, `README.md`, `PROJECT.md`, `HANDOFF.md`; workspace index `../PROJECTS.md`.
-- **Checks actually run:** `node --check app.js`, `node --check document-questions.js`, data count check (200 regular, 80 starred, 16 sets of five, four choices and rationales per starred question), and `git diff --check` passed. No interactive browser or phone test was run.
+- **Summary:** Replaced the 80 paraphrased starred questions with the supplied PDF's question wording, four answer choices, answer key, and all four answer rationales. Grouped them into 16 internal sets of five. The filter offers only an automatic random mixed test that selects five starred and five regular questions and shuffles question and answer order. Published at `https://rraportaru.github.io/`.
+- **Files or locations changed:** `index.html`, `app.js`, `document-questions.js`, `sw.js`, `README.md`, `PROJECT.md`, `HANDOFF.md`; workspace index `../PROJECTS.md`.
+- **Checks actually run:** `node --check app.js`, `node --check document-questions.js`, data count check (200 regular, 80 starred, 16 sets of five, four choices and rationales per starred question), and `git diff --check` passed. Live `app.js` and `document-questions.js` returned HTTP 200 and contain the new mixed-test behavior and question data. No interactive browser or phone test was run.
 - **Decisions:** Each random test always includes five starred and five regular questions, then shuffles all ten and each question's choices. Starred questions preserve the supplied PDF text and all four answer rationales. PDFs remain outside the public repository.
-- **Known issues / open questions:** The update has not been published yet. iPhone Safari interaction still needs learner testing.
-- **Next step:** Commit and publish the change to the GitHub Pages site, then check the live page.
+- **Known issues / open questions:** iPhone Safari interaction still needs learner testing.
+- **Next step:** Open the published test on iPhone Safari and report any corrections.
 
 ## Previous current state
 
@@ -33,8 +33,8 @@ Add older entries below only when they help explain a decision or transition.
 - **Tool:** Codex
 - **Changes:** Replaced the 80 paraphrased sample-paper records with the PDF's exact question text and answer choices, correct answers, and four option rationales. Split the questions into 16 internal groups of five. Changed the filter to a single automatic random mixed test with five regular and five starred questions each time. Updated the service-worker cache version and project documentation.
 - **Checks run:** `node --check app.js`, `node --check document-questions.js`, 200/80/16 data-count check, all starred questions have four options and four rationales matching the answer key, and `git diff --check` passed. No interactive or phone tests were run.
-- **Unresolved:** Publication and iPhone Safari testing.
-- **Next step:** Publish to GitHub Pages and check the live page.
+- **Unresolved:** iPhone Safari testing.
+- **Next step:** Open the random mixed test on iPhone Safari.
 
 ## Update — 2026-11-26
 

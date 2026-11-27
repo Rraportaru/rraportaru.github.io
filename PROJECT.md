@@ -2,8 +2,8 @@
 
 - **Name:** AI Governance Practice
 - **Description:** A phone-friendly ITIL AI Governance quiz with 200 regular questions and 80 sample-paper questions with their answer rationales. Each 10-question attempt automatically mixes five regular and five starred questions and shuffles question and answer order.
-- **Purpose:** Help the learner check understanding and learn from each answer using only the supplied learner workbook.
-- **Status:** The source has 200 regular questions and 80 PDF-sourced starred questions grouped internally into 16 sets of five. The filter exposes one automatic random mixed test. Publication and phone testing are pending.
+- **Purpose:** Help the learner check understanding using the supplied learner workbook and exact sample-paper questions and rationales.
+- **Status:** The app with 200 regular questions and 80 PDF-sourced starred questions grouped internally into 16 sets of five is published at `https://rraportaru.github.io/`. Its filter exposes one automatic random mixed test. Phone testing is pending.
 - **Main location:** `~/Desktop/Projects/AI-Governance-Practice/`
 - **Created:** 2026-11-26
 - **Last updated:** 2026-11-27
@@ -26,9 +26,8 @@ The browser app contains 200 regular questions plus 80 sample-paper questions wi
 
 ## Next steps
 
-1. Publish the update to the GitHub Pages user-site root.
-2. Have the learner open the random mixed test on iPhone Safari.
-3. Address any corrections the learner reports.
+1. Have the learner open the random mixed test on iPhone Safari.
+2. Address any corrections the learner reports.
 
 ## Open questions
 
