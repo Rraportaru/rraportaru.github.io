@@ -93,14 +93,12 @@
     const average = averageGrade();
     const passed = attempts.filter((item) => item.passed).length;
     const recent = attempts.slice(-6).reverse();
-    const versionOptions = versions.map((item, index) => `<option value="version-${index}">${escapeHtml(item.title)}</option>`).join('');
-    const documentOptions = documentSets.map((item) => `<option value="${item.id}">${escapeHtml(item.title)}</option>`).join('');
     app.innerHTML = `
       <div class="dashboard-head">
         <div>
           <p class="eyebrow">WELCOME BACK</p>
           <h2 class="dashboard-title">${escapeHtml(nickname)}</h2>
-          <p class="body-copy">Random and numbered tests have 10 questions. Document practice has 40 or 80. Every grade is out of 10; <strong>8/10 or higher passes.</strong></p>
+          <p class="body-copy">Each test has 10 questions. Every grade is out of 10; <strong>8/10 or higher passes.</strong></p>
         </div>
         <span class="pass-pill">PASS ≥ 8</span>
       </div>
@@ -110,11 +108,11 @@
         <article class="stat-card"><span>Passed</span><strong>${passed}</strong><em>Grade of 8/10 or higher</em></article>
       </div>
       <div class="start-panel">
-        <div class="start-copy"><h3>Ready for a practice test?</h3><p>Questions and answer choices are shuffled each time. <span class="star-inline">★</span> marks questions adapted from the quiz document.</p></div>
+        <div class="start-copy"><h3>Ready for a practice test?</h3><p>Each test mixes regular and <span class="star-inline">★</span> starred questions. Questions and answer choices shuffle automatically.</p></div>
         <div class="start-controls">
-          <label class="sr-only" for="version-select">Choose a version or randomize</label>
-          <select id="version-select" aria-label="Choose a version">
-            <option value="random">Random version · 10 questions</option>${versionOptions}${documentOptions}
+          <label class="sr-only" for="version-select">Test selection</label>
+          <select id="version-select" aria-label="Test selection">
+            <option value="random-mixed">Random mixed test · 10 questions</option>
           </select>
           <button class="primary-button" id="start-button" type="button">Start test</button>
         </div>
@@ -157,24 +155,13 @@
   }
 
   function startTest(choice) {
-    if (choice.startsWith('version-')) {
-      const chosenIndex = Number(choice.slice('version-'.length));
-      startQuestionSet(versions[chosenIndex].title, versions[chosenIndex].questions, chosenIndex);
-      return;
-    }
-    const documentSet = documentSets.find((item) => item.id === choice);
-    if (documentSet) {
-      startQuestionSet(documentSet.title.replace(/^⭐\s*/, ''), documentSet.questions, choice);
-      return;
-    }
-    let chosenIndex = null;
-    if (choice === 'random') {
-      const previous = attempts[attempts.length - 1]?.versionIndex;
-      const choices = versions.map((_, index) => index).filter((index) => versions.length < 2 || index !== previous);
-      chosenIndex = choices[Math.floor(Math.random() * choices.length)];
-    }
-    const sourceVersion = versions[chosenIndex];
-    startQuestionSet(sourceVersion.title, sourceVersion.questions, chosenIndex);
+    const regularPool = versions.flatMap((item) => item.questions);
+    const starredPool = window.starredQuestions || documentSets.flatMap((item) => item.questions);
+    const questions = shuffle([
+      ...shuffle(regularPool).slice(0, 5),
+      ...shuffle(starredPool).slice(0, 5)
+    ]);
+    startQuestionSet('Random mixed test', questions, 'random-mixed');
   }
 
   function startQuestionSet(title, questionList, versionIndex) {

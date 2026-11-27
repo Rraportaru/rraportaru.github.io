@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai-governance-practice-v3';
+const CACHE_NAME = 'ai-governance-practice-v4';
 const APP_FILES = [
   './',
   './index.html',
